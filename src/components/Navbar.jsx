@@ -1,7 +1,24 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+    const firstLetter = user?.email.charAt(0).toUpperCase();
+    const handleSignOut = () => {
+        logOut()
+            .then(data => {
+                Swal.fire({
+                    title: "Success",
+                    text: "Sign out successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+    }
+
     const links = <>
         <li className='text-base font-medium'><NavLink to="/">Home</NavLink></li>
         <li><a>Item 3</a></li>
@@ -30,37 +47,53 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost font-bold text-3xl ">JobBox</a>
+                <Link to="/" className=" flex items-center w-12 font-bold text-2xl ">
+                    <img className='' src="https://img.icons8.com/?size=100&id=44834&format=png&color=000000" alt="" />
+                    JobBox</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                  {links}
+                    {links}
                 </ul>
             </div>
             <div className="navbar-end">
-                <NavLink to="/register" className="btn text-white bg-blue-500 mr-4 hover:-mt-1">Register</NavLink>
-                <a className="btn mr-4 bg-blue-500 text-white hover:-mt-1">SignIn</a>
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                {
+                    user ? <>
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    {
+                                        user.photoURL === null ? <>
+                                            <p className='bg-red-500 w-full h-full text-white font-bold text-3xl'>{firstLetter}</p>
+                                        </> :
+                                            <>
+                                                <img
+                                                    alt={user?.displayName}
+                                                    src={user?.photoURL} />
+                                            </>
+                                    }
+                                </div>
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                <li>
+                                    <a className="justify-between">
+                                        {user?.email}
+                                    </a>
+                                </li>
+                                <li><a>Settings</a></li>
+                                <li><button onClick={handleSignOut}>Logout</button></li>
+                            </ul>
                         </div>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
-                    </ul>
-                </div>
+                    </> :
+
+                        <>
+                            <NavLink to="/register" className="btn text-white bg-blue-500 mr-4 hover:-mt-1">Register</NavLink>
+                            <NavLink to="/signIn" className="btn mr-4 bg-blue-500 text-white hover:-mt-1">SignIn</NavLink>
+                        </>
+                }
+
             </div>
 
         </div>
