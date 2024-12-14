@@ -20,8 +20,14 @@ const Navbar = () => {
     }
 
     const links = <>
-        <li className='text-base font-medium'><NavLink to="/">Home</NavLink></li>
-        <li><a>Item 3</a></li>
+        <li className='text-base font-medium mr-2'><NavLink to="/">Home</NavLink></li>
+        {
+            user && <>
+                <li className="text-base font-medium mr-2"><NavLink to="/add-jobs">Add jobs</NavLink></li>
+                <li className="text-base font-medium mr-2"><NavLink to="/all-jobs">All jobs</NavLink></li>
+                <li className="text-base font-medium mr-2"><NavLink to="/my-applications">My Applications</NavLink></li>
+            </>
+        }
     </>
     return (
         <div className="navbar py-4">

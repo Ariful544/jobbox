@@ -1,0 +1,41 @@
+{
+    "categories": [
+      {
+        "id": 1,
+        "name": "Management",
+        "description": "Focuses on leading teams and organizations effectively.",
+        "icon": "management_icon.png"
+      },
+      {
+        "id": 2,
+        "name": "Marketing & Sale",
+        "description": "Involves promoting and selling products or services.",
+        "icon": "marketing_icon.png"
+      },
+      {
+        "id": 3,
+        "name": "Finance",
+        "description": "Deals with managing money, investments, and economic planning.",
+        "icon": "finance_icon.png"
+      },
+      {
+        "id": 4,
+        "name": "Human Resource",
+        "description": "Handles recruitment, employee relations, and organizational culture.",
+        "icon": "hr_icon.png"
+      },
+      {
+        "id": 5,
+        "name": "Retail & Products",
+        "description": "Covers product development, sales, and retail operations.",
+        "icon": "retail_icon.png"
+      },
+      {
+        "id": 6,
+        "name": "Content Writer",
+        "description": "Focuses on creating engaging and high-quality written content.",
+        "icon": "writer_icon.png"
+      }
+    ]
+  }
+  

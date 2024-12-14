@@ -3,10 +3,12 @@ import React, { useContext } from 'react';
 import loginLottie from '../assets/lottie/login.json'
 import { AuthContext } from '../Provider/AuthProvider';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const LogIn = () => {
     const navigate = useNavigate();
-    const { googleSignIn, setUser,logInWithEmailAndPassword } = useContext(AuthContext);
+    const location = useLocation();
+    let from = location.state || '/';
+    const { googleSignIn, setUser, logInWithEmailAndPassword } = useContext(AuthContext);
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
@@ -16,7 +18,7 @@ const LogIn = () => {
                         text: "Successfully Signed in with Google",
                         icon: "success",
                     })
-                    navigate('/')
+                    navigate(from)
                 }
                 setUser(result.user);
             })
@@ -26,18 +28,18 @@ const LogIn = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        logInWithEmailAndPassword(email,password)
-        .then(result => {
-            if (result.user) {
-                Swal.fire({
-                    title: "Success",
-                    text: "Successfully Signed in",
-                    icon: "success",
-                })
-                navigate('/')
-            }
-            setUser(result.user);
-        })
+        logInWithEmailAndPassword(email, password)
+            .then(result => {
+                if (result.user) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Successfully Signed in",
+                        icon: "success",
+                    })
+                    navigate(from)
+                }
+                setUser(result.user);
+            })
     }
     return (
         <div className="hero min-h-screen">
